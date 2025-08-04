@@ -3,7 +3,7 @@ from .models import Booking, BookedTicket
 
 class BookedTicketInline(admin.TabularInline):
     model = BookedTicket
-    extra = 1  # how many empty forms to show
+    extra = 1  
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):

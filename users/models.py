@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
         return self.username
 
 class PasswordResetToken(models.Model):
-    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)  # ✅ Reference by string
+    user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     token = models.UUIDField(default=uuid.uuid4, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     used = models.BooleanField(default=False)

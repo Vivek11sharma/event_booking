@@ -1,5 +1,3 @@
-# event_booking/event_booking/celery.py
-
 import os
 from celery import Celery
 
