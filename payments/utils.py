@@ -19,8 +19,8 @@ def create_stripe_checkout_session(booking):
             },
         ],
         mode='payment',
-        success_url='http://localhost:8000/payment/success/',
-        cancel_url='http://localhost:8000/payment/cancel/',
+        success_url='http://127.0.0.1:8000/payment/success/',
+        cancel_url='http://127.0.0.1:8000/payment/cancel/',
         payment_intent_data={   
             'metadata': {
                 'booking_id': str(booking.id),

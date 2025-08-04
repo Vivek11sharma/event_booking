@@ -87,7 +87,8 @@ class PasswordResetRequestView(APIView):
             try:
                 user = CustomUser.objects.get(email=email)
                 token = PasswordResetToken.objects.create(user=user)
-                reset_link = f"http://localhost:8000/reset-password/{token.token}/"
+                reset_link = f"http://127.0.0.1:8000/reset-password/{token.token}/"
+
                 send_reset_email_task.delay(email, reset_link)
                 return Response({
                     "status": "success",
