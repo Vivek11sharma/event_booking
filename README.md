@@ -90,23 +90,57 @@ PLATFORM_FEE_PERCENTAGE=10
 
 ```
 
----
 
-### 5. Run Redis Server (Make sure redis is installed in your system before run)
+### 5. Set Up PostgreSQL Database
 
-```bash
-redis-server
-```
+Make sure PostgreSQL is installed and running. Then:
 
-### 6. Run Celery Worker 
+1. Access PostgreSQL as a superuser (e.g., `postgres`):
 
 ```bash
-celery -A event_booking worker --loglevel=info
+psql -U postgres
+```
+
+2. Create the database and user:
+
+```sql
+CREATE DATABASE event_booking1;
+CREATE USER vivek WITH PASSWORD 'vivek123';
+GRANT ALL PRIVILEGES ON DATABASE event_booking1 TO vivek;
+```
+
+3. Switch to the database and assign schema privileges:
+
+```sql
+\c event_booking1
+GRANT ALL PRIVILEGES ON SCHEMA public TO vivek;
+ALTER SCHEMA public OWNER TO vivek;
+```
+
+4. Exit psql:
+
+```sql
+\q
+```
+
+Make sure your `settings.py` contains the following in the `DATABASES` section:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'event_booking1',
+        'USER': 'vivek',
+        'PASSWORD': 'vivek123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 ```
 
 ---
 
-### 7. Apply Migrations & Create Superuser
+### 6. Apply Migrations & Create Superuser
 
 ```bash
 python manage.py makemigrations
@@ -116,11 +150,36 @@ python manage.py createsuperuser
 
 ---
 
-### 8. Run Development Server
+### 7. Run Development Server
 
 ```bash
 python manage.py runserver
 ```
+
+Visit: [http://localhost:8000/admin](http://localhost:8000/admin)
+
+---
+
+### 8. Run Redis Server (for async tasks like email)
+
+Make sure Redis is installed before running:
+
+```bash
+redis-server
+```
+
+---
+
+### 9. Run Celery Worker
+
+```bash
+celery -A event_booking worker --loglevel=info
+```
+
+---
+
+Let me know if you'd like me to regenerate the entire README with these changes applied so you can copy-paste it all at once.
+
 
 Visit: [http://localhost:8000/admin](http://localhost:8000/admin)
 
