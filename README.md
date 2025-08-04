@@ -104,7 +104,7 @@ psql -U postgres
 2. Create the database and user:
 
 ```sql
-CREATE DATABASE event_booking1;
+CREATE DATABASE event_booking;
 CREATE USER vivek WITH PASSWORD 'vivek123';
 GRANT ALL PRIVILEGES ON DATABASE event_booking1 TO vivek;
 ```
@@ -112,7 +112,7 @@ GRANT ALL PRIVILEGES ON DATABASE event_booking1 TO vivek;
 3. Switch to the database and assign schema privileges:
 
 ```sql
-\c event_booking1
+\c event_booking
 GRANT ALL PRIVILEGES ON SCHEMA public TO vivek;
 ALTER SCHEMA public OWNER TO vivek;
 ```
@@ -129,7 +129,7 @@ Make sure your `settings.py` contains the following in the `DATABASES` section:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'event_booking1',
+        'NAME': 'event_booking',
         'USER': 'vivek',
         'PASSWORD': 'vivek123',
         'HOST': 'localhost',
